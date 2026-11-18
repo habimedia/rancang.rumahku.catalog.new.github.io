@@ -65,7 +65,10 @@ footer{padding:28px 32px;background:#0b1c32;color:#c5cdd8;font-size:10px}.footer
 .property-tools label,.sim-grid label{display:grid;gap:7px;font-size:13px}.property-tools input,.sim-grid input,.admin-field textarea.json-field{width:100%;padding:12px;border:1px solid #c5cdd8;border-radius:9px;background:#fff;color:#102746;font:inherit}
 .property-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .property-card{overflow:hidden;border:1px solid #d9dce2;border-radius:16px;background:#fff;box-shadow:0 8px 25px #1027460c}
-.property-card img{width:100%;height:190px;object-fit:cover;display:block}.property-body{padding:17px}.property-body h3{margin:7px 0;color:#102746}.property-price{font-weight:800;color:#b48a42;font-size:20px}.property-meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;color:#536174;font-size:12px}.property-meta span{background:#f0f2f5;padding:6px 8px;border-radius:7px}.property-location{font-size:13px;color:#536174}.property-status{font-size:10px;letter-spacing:.1em;color:#0878ed;font-weight:800}
+.property-card img{width:100%;height:190px;object-fit:cover;display:block}.property-price,
+.property-detail-price {
+  display: none !important;
+}.property-body{padding:17px}.property-body h3{margin:7px 0;color:#102746}.property-price{font-weight:800;color:#b48a42;font-size:20px}.property-meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;color:#536174;font-size:12px}.property-meta span{background:#f0f2f5;padding:6px 8px;border-radius:7px}.property-location{font-size:13px;color:#536174}.property-status{font-size:10px;letter-spacing:.1em;color:#0878ed;font-weight:800}
 .property-empty{padding:22px;border:1px dashed #aab4c1;border-radius:12px;color:#536174;grid-column:1/-1}
 .price-sim{margin-top:26px;padding:26px;background:#102746;color:#f2f0ea;border-radius:18px}.sim-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:18px}.sim-grid input{box-sizing:border-box}.sim-result{margin-top:20px;padding:18px;background:#ffffff12;border:1px solid #c6a15b66;border-radius:13px}.sim-result strong{display:block;font-size:clamp(25px,4vw,38px);color:#e3c17f;margin-top:5px}.sim-note{font-size:12px;color:#c5cdd8;margin-top:10px}
 @media(max-width:850px){.property-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.property-tools{grid-template-columns:1fr 1fr}.sim-grid{grid-template-columns:1fr 1fr}}
@@ -769,21 +772,127 @@ $('adminRecoveryForm').addEventListener('submit', async (e) => {
 <script>
 (function(){
   const featureKey='rancangRumahkuPropertyToolsV1';
-  const defaults={
-    properties:[
-      {name:'Rumah Minimalis Jonggrangan',status:'baru',price:450000000,land:90,building:60,location:'Jonggrangan, Klaten',image:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=85'},
-      {name:'Hunian Modern 2 Lantai',status:'baru',price:725000000,land:120,building:100,location:'Cawas, Klaten',image:'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=85'},
-      {name:'Rumah Keluarga Asri',status:'terjual',price:390000000,land:84,building:55,location:'Bayat, Klaten',image:'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=85'}
-    ],
-    simPrice:500000000,simDp:100000000,simRate:8,simYears:15
-  };
+  
+const defaults={
+  properties:[
+    {
+      name:'WOODEN HARMONY',
+      status:'baru',
+      price:0,
+      land:0,
+      building:0,
+      location:'',
+      images:[
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/wooden-harmony/Picsart_26-11-17_22-55-46-846.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/wooden-harmony/Picsart_26-11-17_22-56-37-421.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/wooden-harmony/Picsart_26-11-17_22-57-23-435.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/wooden-harmony/Picsart_26-11-17_22-58-14-211.jpg'
+      ]
+    },
+    {
+      name:'ROYAL MODERN HOUSE',
+      status:'baru',price:0,land:0,building:0,location:'',
+      images:[
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/royal-modern-house/Picsart_26-11-17_23-04-45-114.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/royal-modern-house/Picsart_26-11-17_23-05-42-667.jpg'
+      ]
+    },
+    {
+      name:'PRESTIGE MODERN HOUSE',
+      status:'baru',price:0,land:0,building:0,location:'',
+      images:[
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/prestige-modern-house/Picsart_26-11-17_23-11-31-694.jpg'
+      ]
+    },
+    {
+      name:'MODERN SERENITY HOUSE',
+      status:'baru',price:0,land:0,building:0,location:'',
+      images:[
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/modern-serenity-house/Picsart_26-11-17_23-34-41-145.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/modern-serenity-house/Picsart_26-11-17_23-35-25-172.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/modern-serenity-house/Picsart_26-11-17_23-36-19-318.jpg'
+      ]
+    },
+    {
+      name:'JONGGRANGAN GRAND HOUSE',
+      status:'baru',price:0,land:0,building:0,location:'',
+      images:[
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/jonggrangan-house/Picsart_26-11-17_23-13-22-489.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/jonggrangan-house/Picsart_26-11-17_23-15-02-079.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/jonggrangan-house/Picsart_26-11-17_23-16-04-488.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/jonggrangan-house/Picsart_26-11-17_23-17-51-769.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/jonggrangan-house/Picsart_26-11-17_23-17-04-235.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/jonggrangan-house/Picsart_26-11-17_23-18-50-416.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/jonggrangan-house/Picsart_26-11-17_23-19-53-901.jpg'
+      ]
+    },
+    {
+      name:'EXCLUSIVE MODERN HOUSE',
+      status:'baru',price:0,land:0,building:0,location:'',
+      images:[
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/infinity-living-house/Picsart_26-11-17_23-23-43-626.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/infinity-living-house/Picsart_26-11-17_23-24-49-252.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/infinity-living-house/Picsart_26-11-17_23-27-07-771.jpg'
+      ]
+    },
+    {
+      name:'HARMONIA HOUSE',
+      status:'baru',price:0,land:0,building:0,location:'',
+      images:[
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/harmonia-house/Picsart_26-11-17_23-30-30-352.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/harmonia-house/Picsart_26-11-17_23-31-20-322.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/harmonia-house/Picsart_26-11-17_23-32-21-167.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/harmonia-house/Picsart_26-11-17_23-33-13-404.jpg'
+      ]
+    },
+    {
+      name:'ELEGANT LIVING HOUSE',
+      status:'baru',price:0,land:0,building:0,location:'',
+      images:[
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/grand-horizon-house/Picsart_26-11-17_22-29-10-727.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/grand-horizon-house/Picsart_26-11-17_22-30-28-448.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/grand-horizon-house/Picsart_26-11-17_22-31-23-230.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/grand-horizon-house/Picsart_26-11-17_23-07-05-986.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/grand-horizon-house/Picsart_26-11-17_23-08-20-113.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/grand-horizon-house/Picsart_26-11-17_23-09-18-794.jpg'
+      ]
+    },
+    {
+      name:'ELVORA HOUSE',
+      status:'baru',price:0,land:0,building:0,location:'',
+      images:[
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/elvora-residence/Picsart_26-11-17_23-22-45-176.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/elvora-residence/Picsart_26-11-17_23-26-01-927.jpg'
+      ]
+    },
+    {
+      name:'DREAMSCAPE HOUSE',
+      status:'baru',price:0,land:0,building:0,location:'',
+      images:[
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/dreamscape-house/Picsart_26-11-17_23-00-58-354.jpg',
+        'https://wuqosinfzfirldtakniw.supabase.co/storage/v1/object/public/property-photos/dreamscape-house/Picsart_26-11-17_23-02-16-109.jpg'
+      ]
+    }
+  ],
+  simPrice:500000000,
+  simDp:100000000,
+  simRate:8,
+  simYears:15
+};
+
   let cfg;
 
 try{
+  const savedCfg=JSON.parse(
+    localStorage.getItem(featureKey)||'{}'
+  );
+
   cfg={
     ...defaults,
-    ...JSON.parse(localStorage.getItem(featureKey)||'{}')
+    ...savedCfg,
+    properties:defaults.properties
   };
+
 }catch(e){
   cfg={...defaults};
 }
@@ -1555,7 +1664,6 @@ $('propertySubmitBtn').addEventListener('click', async()=>{
   });
 
   (async()=>{
-  await loadPropertiesFromSupabase();
   await migrateLegacyPhotos();
   await renderProperties();
   await renderAdminPropertyList();
